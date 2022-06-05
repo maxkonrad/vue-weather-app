@@ -8,7 +8,6 @@
           placeholder="Search..."
           />
       </div>
-
     </main>
   </div>
 </template>
