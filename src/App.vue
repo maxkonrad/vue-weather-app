@@ -61,10 +61,7 @@ export default {
           if (this.weather.cod != "400" || this.weather.cod!= "404"){
           this.fetchRandomPhotoByQuery()
           }
-          else{
-            return
-          }
-      }, 1500)
+      }, 2500)
     }
   
   },
