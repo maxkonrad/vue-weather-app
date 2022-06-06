@@ -2,7 +2,7 @@
   <div id="app">
     <main>
       <div class="background">
-        <video v-if="typeof videos.videos[0] != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*15)].video_files[2].link" type="video/mp4"></video>
+        <video v-if="typeof videos.videos != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*15)].video_files[2].link" type="video/mp4"></video>
 
       <div class="card">
         <div class="search-box">
@@ -41,7 +41,6 @@ export default {
       weather: {},
       videos: {},
       timer: null,
-      transition: false,
     }
   },
   methods: {
@@ -49,18 +48,22 @@ export default {
       const headers = new Headers()
       headers.append("Authorization", this.PEXELS_KEY)
       const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&perpage=1',{
-        method : "GET",
-        headers,
-        mode: "cors",
-        cache: "default"
+      method : "GET",
+      headers,
+      mode: "cors",
+      cache: "default"
       })
-      fetch(request).then(res => res.json()).then(json => {this.videos = json})
-
+      if (this.query.length > 0) {
+      fetch(request).then(res => res.json()).then(json => {
+        this.videos = json})
+      }
     },
     fetchCityByName(){
-      fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json => {
-        this.weather = json
-      }).catch(err => console.log('error', err))
+      if (this.query.length > 0) {
+        fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json => {
+          this.weather = json
+        })
+      }
       },
     fetchDatasAndProcess(){
       clearTimeout(this.timer)
@@ -79,8 +82,8 @@ export default {
 }
 </script>
 <style >
-html, body {margin: 0; height: 100%; overflow: hidden}
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+html, body {margin: 0; height: 100%; overflow: hidden}
 .country-name{
   font-family: 'Oswald', sans-serif;
   margin: 25px 5px;
