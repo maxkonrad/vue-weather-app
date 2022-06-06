@@ -14,10 +14,10 @@
             />
         </div>
         <p class="country-name stroke">{{query.toUpperCase()}}</p>
-        <p class="under-text stroke">{{Math.round(weather.main.temp) - 273}}</p>
-        <p class="stroke under-text">{{weather.weather[0].main}}</p>
-        <p class="stroke small-text">Humidity: {{weather.main.humidity}}%</p>
-        <p class="stroke small-text">Pressure: {{weather.main.pressure}}hPa</p>
+        <p class="under-text stroke" v-if="typeof weather.main != 'undefined'"> {{Math.round(weather.main.temp) - 273}}</p>
+        <p class="stroke under-text" v-if="typeof weather.main != 'undefined'"> {{weather.weather[0].main}}</p>
+        <p class="stroke small-text" v-if="typeof weather.main != 'undefined'"> Humidity: {{weather.main.humidity}}%</p>
+        <p class="stroke small-text" v-if="typeof weather.main != 'undefined'"> Pressure: {{weather.main.pressure}}hPa</p>
       </div>
       
       </div>
@@ -35,7 +35,7 @@ export default {
       api_key: "6dffb22c8ce89a4da256a6de232b13e0",
       query: 'london',
       img_link: '',
-      weather: '',
+      weather: {},
       timer: null,
       transition: false,
     }
