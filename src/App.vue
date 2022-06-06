@@ -36,10 +36,8 @@ export default {
       query: 'london',
       img_link: '',
       weather: '',
-      cod: '',
       timer: null,
       transition: false,
-      
     }
   },
   methods: {
@@ -54,14 +52,13 @@ export default {
     fetchCityByName(){
       fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json=> {
         this.weather = json
-        this.cod = json.code
       })
       },
     fetchDatasAndProcess(){
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
           this.fetchCityByName()
-          if (this.cod != "400" || this.cod != "404"){
+          if (this.weather.cod != "400" || this.weather.cod!= "404"){
           this.fetchRandomPhotoByQuery()
       }
       }, 1500)
