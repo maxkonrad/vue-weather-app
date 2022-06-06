@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <main>
-      <div class="background">
+      <div class="background" v-bind:style="{'background-image': 'url(' + img_link + ')'}" >
 
       <div class="card">
         <div class="search-box">
