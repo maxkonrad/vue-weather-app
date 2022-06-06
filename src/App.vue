@@ -1,7 +1,7 @@
 <template>
-  <div id="app" v-if="typeof weather.main != 'undefined'">
+  <div id="app">
     <main>
-      <div class="background" v-bind:style="{'background-image': 'url(' + img_link + ')'}">
+      <div class="background">
 
       <div class="card">
         <div class="search-box">
@@ -61,7 +61,9 @@ export default {
           if (this.weather.cod != "400" || this.weather.cod!= "404"){
           this.fetchRandomPhotoByQuery()
           }
-
+          else{
+            return
+          }
       }, 1500)
     }
   
