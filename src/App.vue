@@ -2,8 +2,9 @@
   <div id="app">
     <main>
       <div class="background">
-        <video v-if="videos.videos.length > 0" autoplay muted loop id="cityVideo" >
-        <source :src="videos.videos[Math.floor(Math.random()*14)].video_files[2].link" type="video/mp4">
+        <div class="loading" v-if="videos.total_results == 0 || videos.cod == '404'"></div>
+        <video v-else autoplay muted loop id="cityVideo" >
+          <source :src="videos.videos[Math.floor(Math.random()*14)].video_files[2].link" type="video/mp4">
         </video>
 
       <div class="card">
