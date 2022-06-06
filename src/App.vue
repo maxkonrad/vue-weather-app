@@ -1,14 +1,9 @@
 <template>
   <div id="app">
     <main>
-      <div class="background" v-bind:style="{'background-image': 'url(' + img_link + ')'}" >
-        <div class='ripple-background'>
-        <div class='circle xxlarge shade1'></div>
-        <div class='circle xlarge shade2'></div>
-        <div class='circle large shade3'></div>
-        <div class='circle mediun shade4'></div>
-        <div class='circle small shade5'></div>
-        </div>
+      <div class="background">
+        <div class="loading" v-if="videos.total_results == 0 || videos.status == '404'"></div>
+        <video v-else v-if="typeof weather.main != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*14)].video_files[2].link" type="video/mp4"></video>
 
       <div class="card">
         <div class="search-box">
@@ -38,36 +33,44 @@ export default {
     return {
       USPLS_ACCESS_KEY: 'XjEXS7Bgzz23z4VX3ldbgTjxLjTCrNLijrt1I8Pz5ho',
       USPLS_URL: 'https://api.unsplash.com/search/photos/',
+      PEXELS_KEY: '563492ad6f91700001000001889bf528fc3b452ab8fa0da328d1d9a3',//"https://api.pexels.com/videos/search?query=nature&per_page=1"
+      PEXELS_URL: 'https://api.pexels.com/videos/search',
       url: 'https://api.openweathermap.org/data/2.5/weather', //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
       api_key: "6dffb22c8ce89a4da256a6de232b13e0",
       query: 'london',
       img_link: '',
       weather: {},
+      videos: {},
       timer: null,
-      transition: false,
     }
   },
   methods: {
-    fetchRandomPhotoByQuery(){
-      fetch(this.USPLS_URL + `?query=${this.query}` + `&client_id=${this.USPLS_ACCESS_KEY}`)
-      .then(Response => Response.json())
-      .then(json => {this.img_link = json.results[Math.floor(Math.random() * 9)].urls.regular
-      
+    fetchRandomVideoByQuery(){
+      const headers = new Headers()
+      headers.append("Authorization", this.PEXELS_KEY)
+      const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&perpage=1',{
+      method : "GET",
+      headers,
+      mode: "cors",
+      cache: "default"
       })
-      .catch(err => console.log("error", err))
+      if (this.query.trim().length > 0) {
+      fetch(request).then(res => res.json()).then(json => {
+        this.videos = json})
+      }
     },
     fetchCityByName(){
-      fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json=> {
-        this.weather = json
-      }).catch(err => console.log('error', err))
+      if (this.query.trim().length > 0) {
+        fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json => {
+          this.weather = json
+        })
+      }
       },
     fetchDatasAndProcess(){
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
-        if (this.weather.cod != "400" || this.weather.cod!= "404"){
-          this.fetchRandomPhotoByQuery()
-          this.fetchCityByName()
-          }
+        this.fetchRandomVideoByQuery()
+        this.fetchCityByName()
       }, 1500)
     }
   
@@ -79,6 +82,7 @@ export default {
 </script>
 <style >
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+html, body {margin: 0; height: 100%; overflow: hidden}
 .country-name{
   font-family: 'Oswald', sans-serif;
   margin: 25px 5px;
@@ -129,81 +133,12 @@ body{
   background: #3399ff;
 }
 
-
-.circle{
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  animation: ripple 15s infinite;
-  box-shadow: 0px 0px 1px 0px #508fb9;
-}
-
-.small{
-  width: 200px;
-  height: 200px;
-  left: -100px;
-  bottom: -100px;
-}
-
-.medium{
-  width: 400px;
-  height: 400px;
-  left: -200px;
-  bottom: -200px;
-}
-
-.large{
-  width: 600px;
-  height: 600px;
-  left: -300px;
-  bottom: -300px;
-}
-
-.xlarge{
-  width: 800px;
-  height: 800px;
-  left: -400px;
-  bottom: -400px;
-}
-
-.xxlarge{
-  width: 1000px;
-  height: 1000px;
-  left: -500px;
-  bottom: -500px;
-}
-
-.shade1{
-  opacity: 0.2;
-}
-.shade2{
-  opacity: 0.5;
-}
-
-.shade3{
-  opacity: 0.7;
-}
-
-.shade4{
-  opacity: 0.8;
-}
-
-.shade5{
-  opacity: 0.9;
-}
-
-@keyframes ripple{
-  0%{
-    transform: scale(0.8);
-  }
-  
-  50%{
-    transform: scale(1.2);
-  }
-  
-  100%{
-    transform: scale(0.8);
-  }
+#cityVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  z-index: -1;
 }
 
 </style>
