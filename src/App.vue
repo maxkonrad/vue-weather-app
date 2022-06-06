@@ -2,7 +2,9 @@
   <div id="app">
     <main>
       <div class="background">
-        <video v-if="typeof videos.videos != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*15)].video_files[2].link" type="video/mp4"></video>
+        <video v-if="videos.videos.length > 0" autoplay muted loop id="cityVideo" >
+        <source :src="videos.videos[Math.floor(Math.random()*14)].video_files[2].link" type="video/mp4">
+        </video>
 
       <div class="card">
         <div class="search-box">
@@ -44,7 +46,7 @@ export default {
     }
   },
   methods: {
-    fetchRandomPhotoByQuery(){
+    fetchRandomVideoByQuery(){
       const headers = new Headers()
       headers.append("Authorization", this.PEXELS_KEY)
       const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&perpage=1',{
@@ -69,7 +71,7 @@ export default {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         if (this.weather.cod != "400" || this.weather.cod!= "404"){
-          this.fetchRandomPhotoByQuery()
+          this.fetchRandomVideoByQuery()
           this.fetchCityByName()
           }
       }, 1500)
