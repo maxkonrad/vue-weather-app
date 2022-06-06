@@ -57,11 +57,11 @@ export default {
     fetchDatasAndProcess(){
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
-          this.fetchCityByName()
-          if (this.weather.cod != "400" || this.weather.cod!= "404"){
+        if (this.weather.cod != "400" || this.weather.cod!= "404"){
           this.fetchRandomPhotoByQuery()
+          this.fetchCityByName()
           }
-      }, 2500)
+      }, 1500)
     }
   
   },
