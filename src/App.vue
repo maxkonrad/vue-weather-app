@@ -52,7 +52,7 @@ export default {
     fetchCityByName(){
       fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json=> {
         this.weather = json
-      })
+      }).catch(err => console.log('error', err))
       },
     fetchDatasAndProcess(){
       clearTimeout(this.timer)
