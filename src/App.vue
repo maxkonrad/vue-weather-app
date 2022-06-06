@@ -2,7 +2,7 @@
   <div id="app">
     <main>
       <div class="background">
-        <video v-if="typeof videos.videos != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*15)].video_files[2].link" type="video/mp4"></video>
+        <video v-if="typeof videos.videos[0] != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*15)].video_files[2].link" type="video/mp4"></video>
 
       <div class="card">
         <div class="search-box">
