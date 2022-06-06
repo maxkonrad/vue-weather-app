@@ -54,7 +54,9 @@ export default {
       mode: "cors",
       cache: "default"
       })
+
       if (this.query.trim().length > 0) {
+
       fetch(request).then(res => res.json()).then(json => {
         this.videos = json})
       }
@@ -140,5 +142,5 @@ body{
   width: 100vw;
   z-index: -1;
 }
-
 </style>
+
