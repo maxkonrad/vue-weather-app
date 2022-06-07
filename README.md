@@ -4,7 +4,7 @@ A VueJS project that is handling data coming from APIs and dislpaying it on page
 
 # Link to Deploy of the App
 
-furkanhava.vercel.app
+https://furkanhava.vercel.app
 
 # APIs used
 
