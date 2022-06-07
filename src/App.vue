@@ -70,18 +70,18 @@ export default {
       weather: {},
       videos: {},
       timer: null,
-      videoLink: "",
+      videoLink: '',
     };
   },
   methods: {
-    fetchRandomVideoByQuery() {
+    async fetchRandomVideoByQuery() {
       const headers = new Headers();
       headers.append("Authorization", this.PEXELS_KEY);
       if (this.isMobile()) {
         const request = new Request(
           this.PEXELS_URL +
             `?query=${this.query}` +
-            "&per_page=40" +
+            "&per_page=5" +
             "&orientation=portrait" +
             "&size=medium",
           {
@@ -92,14 +92,14 @@ export default {
           }
         );
         if (this.query.trim().length > 0) {
-          fetch(request)
+          await fetch(request)
             .then((res) => res.json())
             .then((json) => {
               this.videos = json;
               if (json.total_results == 0) {
                 this.videoLink = "";
               } else {
-                json.videos[Math.floor(Math.random() * 39)].video_files.forEach(
+                json.videos[Math.floor(Math.random() * 4)].video_files.forEach(
                   (videoFile) => {
                     if (videoFile.width == 1920 || videoFile.width == 1080) {
                       this.videoLink = videoFile.link;
@@ -124,7 +124,7 @@ export default {
           }
         );
         if (this.query.trim().length > 0) {
-          fetch(request)
+          await fetch(request)
             .then((res) => res.json())
             .then((json) => {
               this.videos = json;
@@ -143,9 +143,9 @@ export default {
         }
       }
     },
-    fetchCityByName() {
+    async fetchCityByName() {
       if (this.query.trim().length > 0) {
-        fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`)
+        await fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`)
           .then((Response) => Response.json())
           .then((json) => {
             this.weather = json;
