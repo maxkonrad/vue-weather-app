@@ -1,6 +1,14 @@
 # Vue-Weather-App
 
-This template should help get you started developing with Vue 3 in Vite.
+A VueJS project that is handling data coming from APIs and dislpaying it on page.
+
+# Link to Deploy of the App
+
+furkanhava.vercel.app
+
+# APIs used
+
+[OpenWeatherMap](https://openweathermap.org/) for weather status and [Pexels API](https://www.pexels.com/api/) for videos
 
 ## Recommended IDE Setup
 
