@@ -74,7 +74,7 @@ export default {
     };
   },
   methods: {
-    async fetchRandomVideoByQuery() {
+     fetchRandomVideoByQuery() {
       const headers = new Headers();
       headers.append("Authorization", this.PEXELS_KEY);
       if (this.isMobile()) {
@@ -92,7 +92,7 @@ export default {
           }
         );
         if (this.query.trim().length > 0) {
-          await fetch(request)
+          fetch(request)
             .then((res) => res.json())
             .then((json) => {
               this.videos = json;
@@ -124,7 +124,7 @@ export default {
           }
         );
         if (this.query.trim().length > 0) {
-          await fetch(request)
+           fetch(request)
             .then((res) => res.json())
             .then((json) => {
               this.videos = json;
@@ -143,9 +143,9 @@ export default {
         }
       }
     },
-    async fetchCityByName() {
+    fetchCityByName() {
       if (this.query.trim().length > 0) {
-        await fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`)
+        fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`)
           .then((Response) => Response.json())
           .then((json) => {
             this.weather = json;
