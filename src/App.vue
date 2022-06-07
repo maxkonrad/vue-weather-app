@@ -3,7 +3,7 @@
     <main>
       <div class="background">
         <div class="loading" v-if="videos.total_results == 0 || videos.status == '404'"></div>
-        <video v-else v-if="typeof weather.main != 'undefined'" autoplay muted loop id="cityVideo" :src="videos.videos[Math.floor(Math.random()*14)].video_files[2].link" type="video/mp4"></video>
+        <video v-else v-if="typeof weather.main != 'undefined'" autoplay muted loop id="cityVideo" :src="videoLink" type="video/mp4"></video>
 
       <div class="card">
         <div class="search-box">
@@ -31,17 +31,15 @@ export default {
   name: 'app',
   data() {
     return {
-      USPLS_ACCESS_KEY: 'XjEXS7Bgzz23z4VX3ldbgTjxLjTCrNLijrt1I8Pz5ho',
-      USPLS_URL: 'https://api.unsplash.com/search/photos/',
       PEXELS_KEY: '563492ad6f91700001000001889bf528fc3b452ab8fa0da328d1d9a3',//"https://api.pexels.com/videos/search?query=nature&per_page=1"
       PEXELS_URL: 'https://api.pexels.com/videos/search',
       url: 'https://api.openweathermap.org/data/2.5/weather', //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
       api_key: "6dffb22c8ce89a4da256a6de232b13e0",
       query: 'london',
-      img_link: '',
       weather: {},
       videos: {},
       timer: null,
+      videoLink: '',
     }
   },
   methods: {
@@ -58,8 +56,15 @@ export default {
       if (this.query.trim().length > 0) {
 
       fetch(request).then(res => res.json()).then(json => {
-        this.videos = json})
+        this.videos = json
+        json.videos[Math.floor(Math.random()*14)].video_files.forEach(videoFile => {
+        if(videoFile.width == 1920){
+          this.videoLink = videoFile.link
+
+        }
+      })})
       }
+      ;
     },
     fetchCityByName(){
       if (this.query.trim().length > 0) {
