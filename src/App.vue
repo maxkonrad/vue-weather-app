@@ -61,7 +61,7 @@ export default {
           this.videoLink = ''
         }
         else{
-          json.videos[Math.floor(Math.random()*39)].video_files.forEach(videoFile => {
+          json.videos[Math.floor(Math.random()*39)].video_files.forEach((videoFile) => {
             if(videoFile.width == 1920 && videoFile.height == 1080){
             this.videoLink = videoFile.link
         }
