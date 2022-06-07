@@ -81,7 +81,7 @@ export default {
         const request = new Request(
           this.PEXELS_URL +
             `?query=${this.query}` +
-            "&per_page=5" +
+            "&per_page=1" +
             "&orientation=portrait" +
             "&size=medium",
           {
@@ -99,7 +99,7 @@ export default {
               if (json.total_results == 0) {
                 this.videoLink = "";
               } else {
-                json.videos[Math.floor(Math.random() * 4)].video_files.forEach(
+                json.videos[0].video_files.forEach(
                   (videoFile) => {
                     if (videoFile.width == 1920 || videoFile.width == 1080) {
                       this.videoLink = videoFile.link;
