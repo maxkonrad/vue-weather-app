@@ -46,7 +46,7 @@ export default {
     async fetchRandomVideoByQuery(){
       const headers = new Headers()
       headers.append("Authorization", this.PEXELS_KEY)
-      const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&perpage=1',{
+      const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&per_page=40' + '&orientation=landscape',{
       method : "GET",
       headers,
       mode: "cors",
@@ -61,7 +61,7 @@ export default {
           this.videoLink = ''
         }
         else{
-          json.videos[Math.floor(Math.random()*14)].video_files.forEach(videoFile => {
+          json.videos[Math.floor(Math.random()*39)].video_files.forEach(videoFile => {
             if(videoFile.width == 1920 || videoFile.quality == 'hd'){
             this.videoLink = videoFile.link
         }
