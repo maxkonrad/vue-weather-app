@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    fetchRandomVideoByQuery(){
+    async fetchRandomVideoByQuery(){
       const headers = new Headers()
       headers.append("Authorization", this.PEXELS_KEY)
       const request = new Request(this.PEXELS_URL + `?query=${this.query}` + '&perpage=1',{
@@ -55,20 +55,25 @@ export default {
 
       if (this.query.trim().length > 0) {
 
-      fetch(request).then(res => res.json()).then(json => {
+      await fetch(request).then(res => res.json()).then(json => {
         this.videos = json
-        json.videos[Math.floor(Math.random()*14)].video_files.forEach(videoFile => {
-        if(videoFile.width == 1920){
-          this.videoLink = videoFile.link
-
+        if (json.total_results == 0) {
+          this.videoLink = ''
         }
-      })})
+        else{
+          json.videos[Math.floor(Math.random()*14)].video_files.forEach(videoFile => {
+            if(videoFile.width == 1920 || videoFile.quality == 'hd'){
+            this.videoLink = videoFile.link
+        }
+      })
+        }
+        })
       }
       ;
     },
-    fetchCityByName(){
+    async fetchCityByName(){
       if (this.query.trim().length > 0) {
-        fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json => {
+        await fetch(this.url + `?q=${this.query}` + `&appid=${this.api_key}`).then(Response => Response.json()).then(json => {
           this.weather = json
         })
       }
