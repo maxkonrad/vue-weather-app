@@ -238,7 +238,7 @@ body {
 #cityVideo {
   position: fixed;
   right: 0;
-  bottom: 0;
+  top: 0;
   width: 100vw;
   z-index: -1;
 }
