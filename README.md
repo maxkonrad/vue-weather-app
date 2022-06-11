@@ -1,6 +1,6 @@
 # Vue-Weather-App
 
-A VueJS project that is handling data coming from APIs and dislpaying it on page.
+A VueJS project that is handling data coming from APIs and displaying it on page.
 
 # Link to Deploy of the App
 
